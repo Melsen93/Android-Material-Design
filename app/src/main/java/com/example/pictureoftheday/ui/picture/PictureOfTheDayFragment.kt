@@ -10,10 +10,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import coil.api.load
 import com.example.pictureoftheday.R
 import com.example.pictureoftheday.databinding.MainFragmentBinding
 import com.example.pictureoftheday.ui.MainActivity
+import com.example.pictureoftheday.ui.picture.view_pager.ViewPagerAdapter
 import com.example.pictureoftheday.ui.settings.SettingsFragment
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -49,6 +49,8 @@ class PictureOfTheDayFragment : Fragment() {
                 )
             })
         }
+        binding.viewPager.adapter = ViewPagerAdapter(childFragmentManager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
         setBottomSheetBehaviour(view.findViewById(R.id.bottom_sheet_container))
         bottomSheetHeader = view.findViewById(R.id.bottom_sheet_description_header)
         bottomSheetContent = view.findViewById(R.id.bottom_sheet_description)
@@ -57,7 +59,7 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getData().observe(viewLifecycleOwner, {
+        viewModel.getData(null).observe(viewLifecycleOwner, {
             renderData(it)
         })
     }
@@ -74,11 +76,6 @@ class PictureOfTheDayFragment : Fragment() {
                 if (url.isNullOrEmpty()) {
                     toast("Url is empty")
                 } else {
-                    binding.imageView.load(url) {
-                        lifecycle(this@PictureOfTheDayFragment)
-                        error(R.drawable.ic_load_error_vector)
-                        placeholder(R.drawable.ic_no_photo_vector)
-                    }
                     bottomSheetHeader.text = serverResponseData.title
                     bottomSheetContent.text = serverResponseData.explanation
                 }
