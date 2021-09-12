@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.pictureoftheday.ui.collapsing_toolbar.CollapsingToolbarActivity" />
+        <activity android:name="com.example.pictureoftheday.ui.collapsing_toolbar.CollapsingToolbarActivity"/>
 
     </application>
 
