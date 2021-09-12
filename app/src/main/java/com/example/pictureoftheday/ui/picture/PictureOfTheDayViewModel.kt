@@ -24,7 +24,7 @@ class PictureOfTheDayViewModel(
         if (apiKey.isBlank()) {
             PictureOfTheDayData.Error(Throwable("You need API key"))
         } else {
-            if (date.isNullOrEmpty()) {
+            if(date.isNullOrEmpty()){
                 retrofitImpl
                     .getRetrofitImpl()
                     .getPictureOfTheDay(apiKey)
